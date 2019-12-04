@@ -152,6 +152,7 @@ function wwwRedirect(req, res, nextAction) {
       const assets = await getAssets(req.params.asset)
       res.json(assets)
     } catch (e) {
+      console.log(e)
       res.status(e.statusCode || 500).json({ message: e.message || 'unknownError' })
     }
   })
