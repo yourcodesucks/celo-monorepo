@@ -1,20 +1,20 @@
 import * as React from 'react'
 import { withNamespaces } from 'react-i18next'
-import { Text, View, StyleSheet } from 'react-native'
-import Page from 'src/brandkit/common/Page'
-import { hashNav } from 'src/shared/menu-items'
-import PageHeadline from 'src/brandkit/common/PageHeadline'
-import { I18nProps, NameSpaces } from 'src/i18n'
-import { H2 } from 'src/fonts/Fonts'
+import { StyleSheet, Text, View } from 'react-native'
+import CCLicense from 'src/brandkit/common/CCLicense'
 import { brandStyles } from 'src/brandkit/common/constants'
-import { fonts, standardStyles, colors } from 'src/styles'
 import Fetch from 'src/brandkit/common/Fetch'
+import Page from 'src/brandkit/common/Page'
+import PageHeadline from 'src/brandkit/common/PageHeadline'
 import Showcase from 'src/brandkit/common/Showcase'
+import { H2 } from 'src/fonts/Fonts'
+import { I18nProps, NameSpaces } from 'src/i18n'
+import { hashNav } from 'src/shared/menu-items'
 import Spinner from 'src/shared/Spinner'
+import { colors, fonts, standardStyles } from 'src/styles'
 
 const { brandImagery } = hashNav
 
-// TODO in v 1.1
 const KeyImageryWrapped = React.memo(function KeyImagery() {
   return (
     <Page
@@ -31,7 +31,12 @@ export default KeyImageryWrapped
 
 const Overview = React.memo(
   withNamespaces(NameSpaces.brand)(function _Overview({ t }: I18nProps) {
-    return <PageHeadline title={t('keyImagery.title')} headline={t('keyImagery.headline')} />
+    return (
+      <>
+        <PageHeadline title={t('keyImagery.title')} headline={t('keyImagery.headline')} />
+        <CCLicense textI18nKey="keyImagery.license" />
+      </>
+    )
   })
 )
 

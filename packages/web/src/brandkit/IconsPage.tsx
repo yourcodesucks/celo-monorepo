@@ -5,13 +5,12 @@ import { StyleSheet, Text, View } from 'react-native'
 import { brandStyles, GAP } from 'src/brandkit/common/constants'
 import Page from 'src/brandkit/common/Page'
 import PageHeadline from 'src/brandkit/common/PageHeadline'
-import { I18nProps, NameSpaces, Trans } from 'src/i18n'
+import { I18nProps, NameSpaces } from 'src/i18n'
 
 import Fetch from 'src/brandkit/common/Fetch'
 import IconShowcase from 'src/brandkit/common/Showcase'
-import InlineAnchor from 'src/shared/InlineAnchor'
-import { CeloLinks, hashNav } from 'src/shared/menu-items'
-import { fonts, standardStyles } from 'src/styles'
+import { hashNav } from 'src/shared/menu-items'
+import CCLicense from 'src/brandkit/common/CCLicense'
 
 export default React.memo(function IconsPage() {
   return (
@@ -39,16 +38,7 @@ const Overview = withNamespaces(NameSpaces.brand)(function _Overview({ t }: I18n
   return (
     <View style={styles.container}>
       <PageHeadline title={t('icons.title')} headline={t('icons.headline')} />
-      <Text style={[fonts.h5a, brandStyles.gap, standardStyles.blockMarginTop]}>
-        {t('licenseTitle')}
-      </Text>
-      <Text style={[fonts.p, brandStyles.gap, standardStyles.elementalMargin]}>
-        <Trans i18nKey="icons.license">
-          <InlineAnchor href={CeloLinks.iconsLicense}>
-            Creative Commons Attribution-NoDerivatives 4.0 International License
-          </InlineAnchor>
-        </Trans>
-      </Text>
+      <CCLicense textI18nKey="icons.license" />
       <View style={brandStyles.tiling}>
         <Fetch query="/brand/api/assets/icons">
           {({ loading, data }: { loading: boolean; data: IconData[] }) => {
