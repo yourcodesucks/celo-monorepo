@@ -89,7 +89,6 @@ function CoinLine() {
                 style={[
                   rainBowStyles.slideingCoin,
                   {
-                    // @ts-ignore
                     mixBlendMode: 'multiply',
                     animationKeyframes: [
                       {

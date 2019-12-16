@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Path } from 'src/shared/svg'
+import { G, Path } from 'src/shared/svg'
 import { colors } from 'src/styles'
-import Svg, { G } from 'svgs'
+import Svg from 'svgs'
 
 interface Props {
   color: colors

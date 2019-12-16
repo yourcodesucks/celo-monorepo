@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   movingCoin: {
     position: 'absolute',
     opacity: 1,
+    mixBlendMode: 'multiply',
     // keeps it so that the mix-blend-mode svg blends after animation, otherwise it disapears on Chrome for Android on Pixel 3
     willChange: 'opacity',
   },
@@ -105,13 +106,7 @@ class Animation extends React.PureComponent<ScreenProps> {
       >
         <View style={areaStyle}>
           <OvalCoin color={colors.primary} size={coinsSize} />
-          <View
-            style={[
-              styles.movingCoin,
-              // @ts-ignore
-              { mixBlendMode: 'multiply', top: coinsSize / 3, left: (-coinsSize * ratio) / 6 },
-            ]}
-          >
+          <View style={[styles.movingCoin, { top: coinsSize / 3, left: (-coinsSize * ratio) / 6 }]}>
             <Fade bottom={true} distance={`${coinsSize / 3}px`} delay={baseDelay}>
               <HollowOval color={colors.deepBlue} size={coinsSize} />
             </Fade>
@@ -120,13 +115,7 @@ class Animation extends React.PureComponent<ScreenProps> {
         <View style={areaStyle}>
           <OvalCoin color={colors.primary} size={coinsSize} />
 
-          <View
-            style={[
-              styles.movingCoin,
-              // @ts-ignore - mixBlendMode get stripped out when used in stylesheet
-              { mixBlendMode: 'multiply', top: 0 },
-            ]}
-          >
+          <View style={[styles.movingCoin, { top: 0 }]}>
             <Fade bottom={true} distance={`${coinsSize / 4}px`} delay={baseDelay * 2}>
               <OvalCoin color={colors.deepBlue} size={coinsSize} />
             </Fade>
@@ -134,13 +123,7 @@ class Animation extends React.PureComponent<ScreenProps> {
         </View>
         <View style={areaStyle}>
           <OvalCoin color={colors.primary} size={coinsSize} />
-          <View
-            style={[
-              styles.movingCoin,
-              // @ts-ignore
-              { mixBlendMode: 'multiply', top: -coinsSize / 2, left: (coinsSize * ratio) / 3 },
-            ]}
-          >
+          <View style={[styles.movingCoin, { top: -coinsSize / 2, left: (coinsSize * ratio) / 3 }]}>
             <Fade bottom={true} distance={`${coinsSize / 5}px`} delay={baseDelay * 3}>
               <OvalCoin color={colors.deepBlue} size={coinsSize} />
             </Fade>
