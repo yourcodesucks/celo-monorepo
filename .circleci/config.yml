@@ -8,12 +8,12 @@ reference:
   android_config: &android_config
     working_directory: *workspace
     macos:
-      xcode: "10.2.1"
+      xcode: '10.2.1'
     shell: /bin/bash --login -eo pipefail
     environment:
       TERM: dumb
-      _JAVA_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
+      _JAVA_OPTIONS: '-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap'
+      GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true'
 
 defaults: &defaults
   working_directory: ~/app
@@ -21,15 +21,15 @@ defaults: &defaults
     - image: celohq/node10-gcloud
   environment:
     # To avoid ENOMEM problem when running node
-    NODE_OPTIONS: "--max-old-space-size=4096"
+    NODE_OPTIONS: '--max-old-space-size=4096'
 
 android-defaults: &android-defaults
   <<: *defaults
   docker:
     - image: circleci/android:api-28-node
   environment:
-    _JAVA_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
-    GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
+    _JAVA_OPTIONS: '-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap'
+    GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true'
 
 e2e-defaults: &e2e-defaults
   <<: *defaults
@@ -40,8 +40,8 @@ e2e-defaults: &e2e-defaults
 
 general:
   artifacts:
-    - "mobile/coverage"
-    - "protocol/coverage"
+    - 'mobile/coverage'
+    - 'protocol/coverage'
 
 jobs:
   install_dependencies:
@@ -60,7 +60,7 @@ jobs:
       - save_cache:
           key: source-v1-{{ .Branch }}-{{ .Revision }}
           paths:
-            - ".git"
+            - '.git'
 
       - run:
           name: Verify setup for incremental testing
@@ -116,9 +116,8 @@ jobs:
             # separate build to avoid ENOMEM in CI :(
             yarn build --scope @celo/utils
             yarn build --scope @celo/protocol
-            yarn build --scope docs
             yarn build --scope @celo/walletkit
-            yarn build --ignore @celo/protocol --ignore docs --ignore @celo/walletkit
+            yarn build --ignore @celo/protocol --ignore docs --ignore @celo/walletkit --ignore @celo/web
 
       - run:
           name: Check licenses
@@ -173,7 +172,7 @@ jobs:
             HOMEBREW_NO_AUTO_UPDATE=1 brew tap homebrew/cask-versions
             HOMEBREW_NO_AUTO_UPDATE=1 brew cask install homebrew/cask-versions/adoptopenjdk8
       - run:
-          name: Creace Android Virtual Device (AVD)
+          name: Create Android Virtual Device (AVD)
           command: |
             avdmanager create avd -n Nexus_5X_API_28_x86 -k "system-images;android-26;google_apis;x86" -g google_apis -d "Nexus 5"
             # Copy device configuarion, adv for some reason doesn't
@@ -407,15 +406,6 @@ jobs:
           name: Run Tests
           command: yarn --cwd=packages/contractkit test
 
-      - run:
-          name: Install and test the npm package
-          command: |
-            set -euo pipefail
-            cd packages/contractkit
-            yarn pack
-            cd /tmp
-            npm install ~/app/packages/contractkit/*.tgz
-
   walletkit-test:
     <<: *defaults
     steps:
@@ -436,15 +426,6 @@ jobs:
             set -euo pipefail
             yarn --cwd=packages/walletkit build alfajoresstaging
             yarn --cwd=packages/walletkit test
-
-      - run:
-          name: Install and test the npm package
-          command: |
-            set -euo pipefail
-            cd packages/walletkit
-            yarn pack
-            cd /tmp
-            npm install ~/app/packages/walletkit/*.tgz
 
   cli-test:
     <<: *defaults
@@ -676,10 +657,6 @@ workflows:
   celo-monorepo-build:
     jobs:
       - install_dependencies
-      - end-to-end-mobile-test:
-          requires:
-            - install_dependencies
-            - mobile-test-build-app
       - lint-checks:
           requires:
             - install_dependencies
@@ -739,7 +716,7 @@ workflows:
       - schedule:
           # 7 PM in UTC = noon in PDT.
           # Best for test to fail during SF afternoon, so that, someone can fix it during the day time.
-          cron: "0 19 * * *"
+          cron: '0 19 * * *'
           filters:
             branches:
               only:
@@ -755,7 +732,7 @@ workflows:
       - schedule:
           # 1 PM in UTC = 6 AM in PDT.
           # Best for this slow test (~3 hours) to run during SF early morning.
-          cron: "0 13 * * *"
+          cron: '0 13 * * *'
           filters:
             branches:
               only:

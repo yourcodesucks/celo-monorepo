@@ -8,13 +8,11 @@ const ASSSET_FIELD_DARK = 'Assets (on dark bg)'
 interface Fields extends FieldSet {
   Name: string
   Description: string
-  [ASSSET_FIELD_LIGHT]?: Attachment[]
-  [ASSSET_FIELD_DARK]?: Attachment[]
-  Preview?: Attachment[]
+  [ASSSET_FIELD_LIGHT]: Attachment[]
+  [ASSSET_FIELD_DARK]: Attachment[]
   Zip: Attachment[]
   Terms: boolean
   Tags: string[]
-  Order: number
 }
 
 enum AssetSheet {
@@ -27,17 +25,16 @@ export default function getAssets(sheet: AssetSheet) {
   return getAirtable(sheet)
     .select({
       filterByFormula: `AND(${IS_APROVED}, ${TERMS_SIGNED})`,
-      sort: [{ field: 'Order', direction: 'asc' }],
+      sort: [{ field: 'Name', direction: 'desc' }],
     })
     .all()
     .then((records) => {
-      console.log(records)
       return records.map((r) => normalize(r.fields))
     })
 }
 
 function getAirtable(sheet: AssetSheet): Table<Fields> {
-  return airtableInit(getConfig().serverRuntimeConfig.AIRTABLE_BRANDKIT_ID)(sheet)
+  return airtableInit(getConfig().serverRuntimeConfig.AIRTABLE_BRANDKIT_ID)(sheet) as Table<Fields>
 }
 
 const IS_APROVED = 'Approved=1'
@@ -53,7 +50,7 @@ function normalize(asset: Fields) {
 }
 
 function getPreview(asset: Fields) {
-  const previewField = asset[ASSSET_FIELD_LIGHT] || asset.Preview
+  const previewField = asset[ASSSET_FIELD_LIGHT]
 
   return (
     (previewField &&

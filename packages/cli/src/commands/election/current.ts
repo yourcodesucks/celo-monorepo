@@ -4,15 +4,14 @@ import { validatorTable } from '../validator/list'
 
 export default class ElectionCurrent extends BaseCommand {
   static description =
-    'Outputs the set of validators currently participating in BFT to create blocks. The validator set is re-elected at the end of every epoch.'
+    'Outputs the set of validators currently participating in BFT to create blocks. An election is run to select the validator set at the end of every epoch.'
 
   static flags = {
     ...BaseCommand.flags,
   }
 
-  static examples = ['current']
-
   async run() {
+    const res = this.parse(ElectionCurrent)
     cli.action.start('Fetching currently elected Validators')
     const election = await this.kit.contracts.getElection()
     const validators = await this.kit.contracts.getValidators()
@@ -21,6 +20,6 @@ export default class ElectionCurrent extends BaseCommand {
       signers.map((addr) => validators.getValidatorFromSigner(addr))
     )
     cli.action.stop()
-    cli.table(validatorList, validatorTable)
+    cli.table(validatorList, validatorTable, { 'no-truncate': !res.flags.truncate })
   }
 }

@@ -17,17 +17,17 @@ On the `Accounts` smart contract, any account can register a URL under which the
 
 ContractKit currently supports the following types of claim:
 
-* **Name Claim** - An account can claim a human-readable name. This claim is not verifiable.
+- **Name Claim** - An account can claim a human-readable name. This claim is not verifiable.
 
-* **Attestation Service URL Claim** - For the [lightweight identity layer](../), validators can make a claim under which their Attestation Service is reachable to provide attestations. This claim is not verifiable.
+- **Attestation Service URL Claim** - For the [lightweight identity layer](../), validators can make a claim under which their Attestation Service is reachable to provide attestations. This claim is not verifiable.
 
-* **Keybase User Claim** - Accounts can make claims on [Keybase](https://keybase.io) usernames. This claim is verifiable by signing a message with the account and hosting it on the publicly accessible path of the Keybase file system.
+- **Keybase User Claim** - Accounts can make claims on [Keybase](https://keybase.io) usernames. This claim is verifiable by signing a message with the account and hosting it on the publicly accessible path of the Keybase file system.
 
 In the future ContractKit may support other types of claim, including:
 
-* **Twitter User Claim** - Accounts can make claims on [Twitter](https://twitter.com/) usernames. This claim is verifiable by signing a message with the account and posting it as a tweet. Any client can verify the claim with a reference to the tweet in the claim.
+- **Twitter User Claim** - Accounts can make claims on [Twitter](https://twitter.com/) usernames. This claim is verifiable by signing a message with the account and posting it as a tweet. Any client can verify the claim with a reference to the tweet in the claim.
 
-* **Domain Claim** - Accounts can make claims on domain names. This claim is verifiable by signing a message with the account and embedding it in a [TXT record](https://en.wikipedia.org/wiki/TXT_record).
+- **Domain Claim** - Accounts can make claims on domain names. This claim is verifiable by signing a message with the account and embedding it in a [TXT record](https://en.wikipedia.org/wiki/TXT_record).
 
 ## Handling Metadata
 
@@ -36,29 +36,29 @@ You can interact with metadata files easily through the [CLI](../../../command-l
 You can create an empty metadata file with:
 
 ```bash
-$celocli account:create-metadata ./metadata.json --from $ACCOUNT_ADDRESS
+celocli account:create-metadata ./metadata.json --from $ACCOUNT_ADDRESS
 ```
 
 You can add claims with various commands:
 
 ```bash
-$celocli account:claim-attestation-service-url ./metadata.json --from $ACCOUNT_ADDRESS --url $ATTESTATION_SERVICE_URL
+celocli account:claim-attestation-service-url ./metadata.json --from $ACCOUNT_ADDRESS --url $ATTESTATION_SERVICE_URL
 ```
 
 You can display the claims in your file and their status with:
 
 ```bash
-$celocli account:show-metadata ./metadata.json
+celocli account:show-metadata ./metadata.json
 ```
 
 Once you are satisfied with your claims, you can upload your file to your own web site or a site that will host the file (for example, [https://gist.github.com](https://gist.github.com)) and then register it with the `Accounts` smart contract by running:
 
 ```bash
-$celocli account:register-metadata --url $METADATA_URL --from $ACCOUNT_ADDRESS
+celocli account:register-metadata --url $METADATA_URL --from $ACCOUNT_ADDRESS
 ```
 
 Then, anyone can lookup your claims and verify them by running:
 
 ```bash
-$celocli account:get-metadata $ACCOUNT_ADDRESS
+celocli account:get-metadata $ACCOUNT_ADDRESS
 ```
