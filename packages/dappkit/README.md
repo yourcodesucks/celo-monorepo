@@ -1,4 +1,4 @@
-# Celo DAppKit
+# Celo DAppKit t
 
 DAppKit is a lightweight set of functions that allow mobile DApps to work with the Celo Wallet to sign transactions and access the user's account. This allows for a better user experience: DApps can focus on a great native experience without having to worry about key management. It also provides a simpler development experience, as no state or connection management is necessary.
 
@@ -52,18 +52,21 @@ Once you have the account address, you can make calls against your own smart con
 ([expo base template commit](https://github.com/celo-org/dappkit-base/commit/4fa0dd16a04cd2831dd685378bc49399984bd553))
 
 ```javascript
-  const address = dappkitResponse.address
-  this.setState({ address, phoneNumber: dappkitResponse.phoneNumber, isLoadingBalance: true })
+const address = dappkitResponse.address
+this.setState({ address, phoneNumber: dappkitResponse.phoneNumber, isLoadingBalance: true })
 
-  const kit = newKit('https://alfajores-forno.celo-testnet.org')
-  kit.defaultAccount = address
+const kit = newKit('https://alfajores-forno.celo-testnet.org')
+kit.defaultAccount = address
 
-  const stableToken = await kit.contracts.getStableToken()
+const stableToken = await kit.contracts.getStableToken()
 
-  const [cUSDBalanceBig, cUSDDecimals] = await Promise.all([stableToken.balanceOf(address), stableToken.decimals()])
-  const cUSDBalance = this.convertToContractDecimals(cUSDBalanceBig, cUSDDecimals)
+const [cUSDBalanceBig, cUSDDecimals] = await Promise.all([
+  stableToken.balanceOf(address),
+  stableToken.decimals(),
+])
+const cUSDBalance = this.convertToContractDecimals(cUSDBalanceBig, cUSDDecimals)
 
-  this.setState({ cUSDBalance, isLoadingBalance: false })
+this.setState({ cUSDBalance, isLoadingBalance: false })
 ```
 
 ## Get Contact List Addresses
@@ -73,10 +76,10 @@ For many real-world applications, your user will want to interact with their fri
 ([expo base template commit](https://github.com/celo-org/dappkit-base/commit/ea99ff02009de806c0e248eb7aec617c14223fa5))
 
 ```javascript
-import { fetchContacts } from "@celo/dappkit";
-import * as Permissions from "expo-permissions";
+import { fetchContacts } from '@celo/dappkit'
+import * as Permissions from 'expo-permissions'
 
-const { status } = await Permissions.askAsync(Permissions.CONTACTS);
+const { status } = await Permissions.askAsync(Permissions.CONTACTS)
 
 if (status != Permissions.PermissionStatus.GRANTED) {
   return
@@ -88,9 +91,7 @@ this.setState({ rawContacts, phoneNumbersByAddress })
 
 Object.entries(this.state.phoneNumbersByAddress).map(([address, entry]) => {
   const contact = this.state.rawContacts[entry.id]
-  return (
-    <Button key={address} title={contact.name} onPress={() => {}} />
-  )
+  return <Button key={address} title={contact.name} onPress={() => {}} />
 })
 ```
 
@@ -101,22 +102,19 @@ Let's go from accessing account information to submitting transactions. To alter
 ([expo base template commit](https://github.com/celo-org/dappkit-base/commit/cf35c82d7650e7b6bc7208ece32440d3a32d9cc5))
 
 ```javascript
-import {
-  requestTxSig,
-  waitForSignedTxs
-} from "@celo/dappkit";
+import { requestTxSig, waitForSignedTxs } from '@celo/dappkit'
 
 // Create the transaction object
-const stableToken = await kit.contracts.getStableToken();
-const decimals = await stableToken.decimals();
+const stableToken = await kit.contracts.getStableToken()
+const decimals = await stableToken.decimals()
 const txObject = stableToken.transfer(
   address,
   new BigNumber(10).pow(parseInt(decimals, 10)).toString()
-).txo;
+).txo
 
-const requestId = "transfer";
-const dappName = "My DappName";
-const callback = Linking.makeUrl("/my/path");
+const requestId = 'transfer'
+const dappName = 'My DappName'
+const callback = Linking.makeUrl('/my/path')
 
 // Request the TX signature from DAppKit
 requestTxSig(
@@ -126,26 +124,23 @@ requestTxSig(
       tx: txObject,
       from: this.state.address,
       to: stableToken.contract.options.address,
-      feeCurrency: FeeCurrency.cUSD
-    }
+      feeCurrency: FeeCurrency.cUSD,
+    },
   ],
   { requestId, dappName, callback }
-);
+)
 
-const dappkitResponse = await waitForSignedTxs(requestId);
-const tx = dappkitResponse.rawTxs[0];
+const dappkitResponse = await waitForSignedTxs(requestId)
+const tx = dappkitResponse.rawTxs[0]
 
 // Send the signed transaction via web3
-kit.web3.eth.sendSignedTransaction(tx).on("confirmation", async () => {
+kit.web3.eth.sendSignedTransaction(tx).on('confirmation', async () => {
   const [cUSDBalanceBig, cUSDDecimals] = await Promise.all([
     stableToken.balanceOf(this.state.address),
-    stableToken.decimals()
-  ]);
-  const cUSDBalance = this.convertToContractDecimals(
-    cUSDBalanceBig,
-    cUSDDecimals
-  );
+    stableToken.decimals(),
+  ])
+  const cUSDBalance = this.convertToContractDecimals(cUSDBalanceBig, cUSDDecimals)
 
-  this.setState({ cUSDBalance, isLoadingBalance: false });
+  this.setState({ cUSDBalance, isLoadingBalance: false })
 })
 ```
