@@ -1,4 +1,4 @@
-# Mobile (Celo Wallet)
+# Mobile (Celo Wallet))
 
 ## Overview
 
