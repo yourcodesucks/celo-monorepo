@@ -95,7 +95,7 @@ that you want to use with the app, update `.env.ENV-NAME` and `packages/mobile/.
 the new network name and settings, then rebuild the app. Note that this will assume the testnets
 have a corresponding `/blockchain-api` and `/notification-service` set up.
 
-### Running Wallet app in zero sync (Data Saver) mode
+### Running Wallet app tin zero sync (Data Saver) mode
 
 By default, the mobile wallet app runs geth in ultralight sync mode where all the epoch headers are fetched. The default sync mode is defined in [packages/mobile/.env](https://github.com/celo-org/celo-monorepo/blob/master/packages/mobile/.env#L4) file.
 
