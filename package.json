@@ -27,6 +27,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged",
+      "commit-msg": "bash scripts/check_if_only_docs.sh",
       "pre-push": "node ./scripts/hooks/pre-push.js"
     }
   },
