@@ -88,7 +88,7 @@ renders when no state has changed. Reducing renders can be done via pure
 components in react or overloading the should component update method
 [example here][rn optimize example].
 
-### Connecting to networkstest
+### Connecting to networkste
 
 By default, we have the `alfajores` network set up. If you have other testnets
 that you want to use with the app, update `.env.ENV-NAME` and `packages/mobile/.env.ENV-NAME` with
