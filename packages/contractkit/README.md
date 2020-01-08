@@ -133,7 +133,7 @@ The complete list of Celo Core contracts is:
 - StableToken
 - Validators
 
-## A Note About Contract Addresses
+## A Note About Contract Addressestest
 
 Celo Core Contracts addresses, can be obtained by looking at the `Registry` contract.
 That's actually how `kit` obtain them.
